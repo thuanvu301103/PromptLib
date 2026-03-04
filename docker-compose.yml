@@ -37,7 +37,7 @@ services:
 
   # 3. Frontend Service (Thay đổi từ build -> image trên GHCR)
   ui:
-    image: ghcr.io/thuanvu301103/promptlib-frontend:latest
+    image: ghcr.io/thuanvu301103/promptlib-ui:latest
     container_name: promptlib_ui
     restart: always
     ports:
