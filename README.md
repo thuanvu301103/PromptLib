@@ -1,6 +1,72 @@
 # PromptLib
 PromptLib is a lightweight and flexible tool for managing your prompt library. It helps developers, researchers, and AI enthusiasts organize, store, and reuse prompts with ease. Designed for productivity and collaboration, PromptLib makes working with prompts more structured and efficient
 
+## 🚀 PromptLib Deployment Guide
+
+This repository contains the configuration files required to deploy the PromptLib stack (Frontend, Backend, and Database) using Docker.
+Note: This repository does not contain the source code. It provides the pre-built Docker images and orchestration logic for easy deployment.
+
+### 📋 Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+- Docker (20.10.x or higher)
+- Docker Compose (v2.x or higher)
+
+### 🛠️ Getting Started
+
+#### Clone this repository
+
+```Bash
+https://github.com/thuanvu301103/PromptLib.git
+cd PromptLib
+```
+
+#### Configure Environment Variables
+
+Copy the example environment file and adjust the values if necessary.
+```Bash
+cp .env.example .env
+```
+
+Open the .env file and verify the settings:
+- `MONGODB_LOCAL_PORT`: The port on your host machine to access MongoDB (default: 27018).
+- `PORT`: The port to access the Frontend UI (default: 3001).
+- `NEXT_PUBLIC_API_URL`: The URL where the Frontend can reach the Backend API (default: http://localhost:3000).
+
+#### Deploy with Docker Compose
+
+Run the following command to pull the images from GitHub Container Registry (GHCR) and start the services in detached mode:
+
+```Bash
+docker-compose up -d
+```
+
+### 🏗️ Architecture Overview
+
+The system consists of three main services:
+
+| Service | Image Source | Port (Host) | Description | 
+| --- | --- | --- | --- |
+| UI | ghcr.io/thuanvu301103/promptlib-frontend | 3001 | Web Interface |
+| API | ghcr.io/thuanvu301103/promptlib-api | 3000 | Backend Service | 
+| Database | mongo:latest | 27018 | MongoDB for data persistence | 
+
+### 🛑 Troubleshooting
+
+Common Issues:
+- Port Conflict: If ports 3000, 3001, or 27018 are already in use, change the mapping in your .env file.
+- Connectivity: Ensure the NEXT_PUBLIC_API_URL is accessible from your browser (client-side), as Next.js calls the API from the user's browser.
+- Database Auth: If you change MONGODB_USER or MONGODB_PASSWORD after the first run, you may need to clear the volume: docker-compose down -v.
+
+### 🔒 Security & Privacy
+
+The source code for this project is hosted in a Private Repository.The Docker images are built using Multi-stage builds to ensure that no source code or sensitive build-time artifacts are included in the final distribution.No sensitive credentials (API Keys, Production Secrets) are hardcoded into the images.
+
+### 📧 Support
+If you encounter any issues during deployment, please open an Issue in this repository or contact the maintainer at vungocthuan1234@gmail.com.
+
+---
+
 ## 🚀 PromptLib API
 
 PromptLib API is a specialized backend service designed to streamline the management of LLM prompt templates. It provides a centralized repository for creating, versioning, and retrieving prompts, allowing developers to decouple prompt engineering from core application logic.
@@ -114,7 +180,7 @@ docker-compose up --build -d
 - Prompt Templates Management Dashboard: A centralized UI to create, browse, and organize all your stored prompt templates.
 - Version History Browser: Easily navigate through different versions of a prompt and compare changes visually.
 
-### 🚀 Quick Start
+### 🏗️ Execution Guide
 
 #### Pulling the image
 
