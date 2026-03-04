@@ -1,7 +1,7 @@
 # PromptLib
 PromptLib is a lightweight and flexible tool for managing your prompt library. It helps developers, researchers, and AI enthusiasts organize, store, and reuse prompts with ease. Designed for productivity and collaboration, PromptLib makes working with prompts more structured and efficient
 
-## 🚀 PromptLib API: Repository Overview
+## 🚀 PromptLib API
 
 PromptLib API is a specialized backend service designed to streamline the management of LLM prompt templates. It provides a centralized repository for creating, versioning, and retrieving prompts, allowing developers to decouple prompt engineering from core application logic.
 
@@ -104,3 +104,47 @@ docker-compose up --build -d
 - Data Persistence: Your prompt data is stored in the `mongodb_data` volume. It will survive a `docker-compose down`, but will be deleted if you use `docker-compose down -v`.
 - CORS: The `FRONTEND_URL` environment variable is used to configure CORS in the FastAPI app, allowing your frontend (on port 3001) to communicate with this API.
 - Security: Change the `MONGODB_PASSWORD` for any environment beyond local development.
+
+## 🚀 PromptLib UI
+
+`promptlib-ui` is the official web-based user interface for the PromptLib API. It provides an intuitive, user-friendly dashboard for prompt engineers and developers to manage, test, and version their LLM prompt templates without interacting directly with the backend code or database.
+
+### ✨ Key Features
+
+- Prompt Templates Management Dashboard: A centralized UI to create, browse, and organize all your stored prompt templates.
+- Version History Browser: Easily navigate through different versions of a prompt and compare changes visually.
+
+### 🚀 Quick Start
+
+#### Pulling the image
+
+```Bash
+docker pull thuanvu301103/promptlib-ui:latest
+```
+
+#### Running with Docker Compose
+
+To run the UI alongside your API, add this service to your docker-compose.yml:
+
+```YAML  
+ui:
+    image: thuanvu301103/promptlib-ui:latest
+    container_name: promptlib_ui
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      # URL of your running PromptLib API
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+    networks:
+      - prompt_network
+```
+
+### 📂 Configuration
+
+The UI is highly configurable through environment variables:
+
+| Variable | Description | Default | 
+| --- | --- | --- |
+| NEXT_PUBLIC_API_URL | The endpoint where the UI can reach your PromptLib API | http://localhost:3000 | 
+| NODE_ENV | Environment mode (production/development) | production |
