@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # 1. Database Service (Dùng image chính thức từ Docker Hub)
+  mongodb:
+    image: mongo:latest
+    container_name: promptlib_mongodb
+    restart: always
+    ports:
+      - "${MONGODB_LOCAL_PORT:-27018}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-password123}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE:-promptlib}
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - prompt_network
+
+  # 2. Backend API Service (Thay đổi từ build -> image trên GHCR)
+  api:
+    image: ghcr.io/thuanvu301103/promptlib-api:latest
+    container_name: promptlib_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: mongodb
+      MONGODB_USER: ${MONGODB_USER:-admin}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD:-password123}
+      MONGODB_DATABASE: ${MONGODB_DATABASE:-promptlib}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3001}
+    depends_on:
+      - mongodb
+    networks:
+      - prompt_network
+
+  # 3. Frontend Service (Thay đổi từ build -> image trên GHCR)
+  ui:
+    image: ghcr.io/thuanvu301103/promptlib-frontend:latest
+    container_name: promptlib_ui
+    restart: always
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    environment:
+      - NODE_ENV=production
+      - PORT=${PORT:-3001}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+    depends_on:
+      - api
+    networks:
+      - prompt_network
+
+networks:
+  prompt_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
