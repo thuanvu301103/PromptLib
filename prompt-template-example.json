@@ -1,0 +1,119 @@
+{
+  "title": "Backend REST API Implementation",
+  "slug": "be-rest-api-implementation",
+  "description": "This prompt helps Implement REST API for Backend server",
+  "versions": [
+    {
+      "versionId": "v1.0.0",
+      "isDefault": true,
+      "compatibility": [
+        "Gemini 3"
+      ],
+      "description": "Version 1.0.0 of Backend REST API Implementation Prompt",
+      "structure": [
+        {
+          "name": "Task",
+          "elements": [
+            {
+              "type": "text",
+              "value": {
+                "content": "Draft a REST API implementation for {{feature}}"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Context",
+          "elements": [
+            {
+              "type": "text",
+              "value": {
+                "content": "- Adopt the persona of Senior Backend Architecture/Developer who is working on a {{framework}} project.\n- Your goal is to provide high-quality, scalable, and maintainable code solutions for {{target_audience}}.\n- You must prioritize security (OWASP standards), performance optimization, and follow the {{design_pattern}} (e.g., Clean Architecture or Hexagonal Architecture) where applicable."
+              }
+            }
+          ]
+        },
+        {
+          "name": "References",
+          "elements": [
+            {
+              "type": "text",
+              "value": {
+                "content": "Functional and Business Logic: \n\t- Functional Requirements:\n\t\t{{facts}}\n\t- Business Rules: Specific validation logic, data constraints, and expected state changes.\n\t- Error Handling: Defined HTTP status codes and custom error response structures for this endpoint."
+              }
+            },
+            {
+              "type": "link",
+              "value": {
+                "url": "{{reference_url}}",
+                "description": "Official documentation for the {{framework}} libraries being used."
+              }
+            },
+            {
+              "type": "file",
+              "value": {
+                "name": "{{controller_file_name}}",
+                "extension": "ts",
+                "description": "Controller file"
+              }
+            },
+            {
+              "type": "file",
+              "value": {
+                "name": "{{service_file_name}}",
+                "extension": "ts",
+                "description": "Service file"
+              }
+            },
+            {
+              "type": "file",
+              "value": {
+                "name": "{{shema_file_name}}",
+                "extension": "ts",
+                "description": "Schema file"
+              }
+            },
+            {
+              "type": "file",
+              "value": {
+                "name": "{{dto_file_name}}",
+                "extension": "ts",
+                "description": "DTO file"
+              }
+            },
+            {
+              "type": "code",
+              "value": {
+                "code": "{{code_snippet}}",
+                "language": "markdown",
+                "description": "System Architecture or Folder Structure"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Evaluation",
+          "elements": [
+            {
+              "type": "text",
+              "value": {
+                "content": "- Definition of Done (DoD):\n\t{{constraints}}\n- Code Quality: Adhere to SOLID principles, DRY, and Clean Code practices.\n- Security: Ensure protection against common vulnerabilities (SQL Injection, XSS, CSRF) and implement proper Authorization checks.\n- Performance: Optimize database queries (avoid N+1 problems) and consider Big O complexity for data processing.\n- Testability: The implementation must be easily mockable for Unit Testing with a focus on high branch coverage."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Iteration",
+          "elements": [
+            {
+              "type": "text",
+              "value": {
+                "content": "- Post-Generation Review: After generating the initial implementation, {{follow_up_action}}.\n- Self-Audit: Critically analyze the code for potential edge cases, race conditions, or memory leaks.\n- Documentation: Provide a brief explanation of the architectural choices made and how to call the endpoint.\n- Refinement: If the code exceeds a certain complexity threshold, suggest a more modular refactor."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
